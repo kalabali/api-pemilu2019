@@ -8,8 +8,8 @@ const { getDb, ObjectId } = require('../db')
 
 const loader = async query => {
     try{        
-        let { data, last_crawled } = await getDb().db(process.env.DB_NAME).collection('data_pileg').findOne({
-            '_id': ObjectId(process.env.DATA_PILEG_ID)
+        let { data, last_crawled } = await getDb().db(process.env.DB_NAME).collection(process.env.PILPRES_COLLECTION).findOne({
+            '_id': ObjectId(process.env.DATA_PILPRES_ID)
         })
         const { institute, candidate } = query
         

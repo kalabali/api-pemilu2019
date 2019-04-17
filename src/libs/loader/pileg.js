@@ -8,7 +8,7 @@ const { getDb, ObjectId } = require('../db')
 
 const loader = async query => {
     try{
-        let { data, last_crawled } = await getDb().db(process.env.DB_NAME).collection('data_pileg').findOne({
+        let { data, last_crawled } = await getDb().db(process.env.DB_NAME).collection(process.env.PILEG_COLLECTION).findOne({
             '_id': ObjectId(process.env.DATA_PILEG_ID)
         })
         console.log({data, last_crawled})
