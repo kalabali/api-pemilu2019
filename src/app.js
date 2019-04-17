@@ -2,11 +2,20 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
+const cron = require('node-cron');
+
 const loaderPilpres = require('./libs/loader/pilpres')
 const scrapperPilpress = require('./libs/scrapper/pilpres')
 const loaderPileg = require('./libs/loader/pileg')
 const scrapperPileg = require('./libs/scrapper/pileg')
+
 const port = process.env.PORT
+
+cron.schedule('* * * * *', async () => {
+    const data = await Promise.all([scrapperPilpress(), scrapperPileg()])
+    console.log(data)
+    console.log('cron quick count updated')
+});
 
 app.options("*", function (req, res, next) {
     let headers = {
