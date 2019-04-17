@@ -1,2 +1,4 @@
 .env
 node_modules
+src/data/quick-count-pilpres.json
+src/data/quick-count-pileg.json

@@ -9,8 +9,6 @@ the lembaga thing is {
 
 const axios = require('axios')
 const cheerio = require('cheerio')
-const fs = require('fs');
-const path = require('path');
 const cardReader = require('../card-reader/pilpres')
 const institue = [
     'indikator politik indonesia',
@@ -29,14 +27,7 @@ const scrapper = async () => {
         }).get()        
 
         let aestTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
-        aestTime = new Date(aestTime);
-        
-        fs.writeFile(path.resolve('src/data/quick-count-pilpres.json'), JSON.stringify({
-            data,
-            last_crawled: aestTime.toLocaleString()
-        }), 'utf8', () => {
-            console.log('quick count data updated')
-        });
+        aestTime = new Date(aestTime);    
 
         return {
             data,
@@ -47,5 +38,6 @@ const scrapper = async () => {
         throw new Error(e)
     }
 }
+
 
 module.exports = scrapper

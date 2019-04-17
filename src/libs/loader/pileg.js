@@ -4,11 +4,14 @@ query: {
     political_party: string
 }
 */
+const { getDb, ObjectId } = require('../db')
 
-let { data, last_crawled } = require('../../data/quick-count-pileg.json')
-
-const loader = query => {
+const loader = async query => {
     try{
+        let { data, last_crawled } = await getDb().db(process.env.DB_NAME).collection('data_pileg').findOne({
+            '_id': ObjectId(process.env.DATA_PILEG_ID)
+        })
+        console.log({data, last_crawled})
         const { institute, political_party } = query
         
         if(institute && institute !== ''){

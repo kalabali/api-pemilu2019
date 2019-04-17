@@ -4,11 +4,13 @@ query: {
     candidate: string
 }
 */
+const { getDb, ObjectId } = require('../db')
 
-let { data, last_crawled } = require('../../data/quick-count-pilpres.json')
-
-const loader = query => {
-    try{
+const loader = async query => {
+    try{        
+        let { data, last_crawled } = await getDb().db(process.env.DB_NAME).collection('data_pileg').findOne({
+            '_id': ObjectId(process.env.DATA_PILEG_ID)
+        })
         const { institute, candidate } = query
         
         if(institute && institute !== ''){
