@@ -2,8 +2,10 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
-const loader = require('./libs/loader')
-const scrapper = require('./libs/scrapper')
+const loaderPilpres = require('./libs/loader/pilpres')
+const scrapperPilpress = require('./libs/scrapper/pilpres')
+const loaderPileg = require('./libs/loader/pileg')
+const scrapperPileg = require('./libs/scrapper/pileg')
 const port = process.env.PORT
 
 app.options("*", function (req, res, next) {
@@ -18,7 +20,7 @@ app.options("*", function (req, res, next) {
     res.end();
 });
 
-app.get('/', (req, res) => {
+app.get('/pilpres', (req, res) => {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -26,7 +28,7 @@ app.get('/', (req, res) => {
     res.setHeader("Content-Type", "application/json");
 
     try{
-        const { data, last_crawled } = loader(req.query)
+        const { data, last_crawled } = loaderPilpres(req.query)
         res.status(200).json({
             success: true,
             last_crawled,
@@ -43,14 +45,62 @@ app.get('/', (req, res) => {
     }
 })
 
-app.get('/reload', async (req, res) => {
+app.get('/pilpres/reload', async (req, res) => {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,OPTIONS');
     res.header("Access-Control-Allow-Headers", 'Origin, Content-Type, Accept, Authorization, X-Request-With');
     res.setHeader("Content-Type", "application/json");
     try{
-        const { data, last_crawled } = await scrapper()
+        const { data, last_crawled } = await scrapperPilpress()
+        res.status(200).json({
+            success: true,
+            last_crawled,
+            data,
+        })
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).json({
+            success: false,
+            msg: e.message
+        })
+    }
+})
+
+app.get('/pileg', (req, res) => {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin, Content-Type, Accept, Authorization, X-Request-With');
+    res.setHeader("Content-Type", "application/json");
+
+    try{
+        const { data, last_crawled } = loaderPileg(req.query)
+        res.status(200).json({
+            success: true,
+            last_crawled,
+            data,
+            query: req.query    
+        })
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).json({
+            success: false,
+            msg: 'pantau yang lain dulu gan'
+        })
+    }
+})
+
+app.get('/pileg/reload', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin, Content-Type, Accept, Authorization, X-Request-With');
+    res.setHeader("Content-Type", "application/json");
+    try{
+        const { data, last_crawled } = await scrapperPileg()
         res.status(200).json({
             success: true,
             last_crawled,

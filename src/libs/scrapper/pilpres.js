@@ -11,7 +11,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const fs = require('fs');
 const path = require('path');
-const cardReader = require('./card-reader')
+const cardReader = require('../card-reader/pilpres')
 const institue = [
     'indikator politik indonesia',
     'indo barometer',
@@ -31,7 +31,7 @@ const scrapper = async () => {
         let aestTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
         aestTime = new Date(aestTime);
         
-        fs.writeFile(path.resolve('src/data/quick-count.json'), JSON.stringify({
+        fs.writeFile(path.resolve('src/data/quick-count-pilpres.json'), JSON.stringify({
             data,
             last_crawled: aestTime.toLocaleString()
         }), 'utf8', () => {

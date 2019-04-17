@@ -1,26 +1,26 @@
 /*
 query: {
     institute: string
-    candidate: string
+    political_party: string
 }
 */
 
-let { data, last_crawled } = require('../data/quick-count.json')
+let { data, last_crawled } = require('../../data/quick-count-pileg.json')
 
 const loader = query => {
     try{
-        const { institute, candidate } = query
+        const { institute, political_party } = query
         
         if(institute && institute !== ''){
             const key = institute.toLowerCase();
             const re = new RegExp(key,"g");
             data = data.filter(d => d.institute.toLowerCase().search(re) !== -1)            
         }
-        if(candidate && candidate !== ''){
-            const key = candidate.toLowerCase();            
+        if(political_party && political_party !== ''){
+            const key = political_party.toLowerCase();            
             const re = new RegExp(key,"g");
             data = data.map(d => {
-                d.candidates = d.candidates.filter(({ candidates_name }) => candidates_name.toLowerCase().search(re) !== -1 )                
+                d.political_party = d.political_party.filter(({ name }) => name.toLowerCase().search(re) !== -1 )                
                 return d
             })
         }
