@@ -60,7 +60,7 @@ app.options("*", function (req, res, next) {
 
 app.get('/', (req,res) => res.status(200).json({'msg': "pilpres 2019"}))
 
-app.get('/pilpres', (req, res) => {
+app.get('/pilpres', async (req, res) => {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -68,7 +68,7 @@ app.get('/pilpres', (req, res) => {
     res.setHeader("Content-Type", "application/json");
 
     try{
-        const { data, last_crawled } = loaderPilpres(req.query)
+        const { data, last_crawled } = await loaderPilpres(req.query)
         res.status(200).json({
             success: true,
             last_crawled,
