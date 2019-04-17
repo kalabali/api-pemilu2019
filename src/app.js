@@ -34,7 +34,7 @@ cron.schedule('* * * * *', async () => {
         data: data[0].data,            
     })
 
-    const result2 = await db.getDb().db(process.env.DB_NAME).collection(proces.env.PILEG_COLLECTION).replaceOne({
+    const result2 = await db.getDb().db(process.env.DB_NAME).collection(process.env.PILEG_COLLECTION).replaceOne({
         _id: ObjectId(process.env.DATA_PILEG_ID)
     }, {
         _id: ObjectId(process.env.DATA_PILEG_ID),
@@ -148,7 +148,7 @@ app.get('/pileg/reload', async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     try{
         const { data, last_crawled } = await scrapperPileg()
-        const result = await db.getDb().db(process.env.DB_NAME).collection(proces.env.PILEG_COLLECTION).replaceOne({
+        const result = await db.getDb().db(process.env.DB_NAME).collection(process.env.PILEG_COLLECTION).replaceOne({
             _id: ObjectId(process.env.DATA_PILEG_ID)
         }, {
             _id: ObjectId(process.env.DATA_PILEG_ID),
