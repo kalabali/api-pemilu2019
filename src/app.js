@@ -29,6 +29,8 @@ app.options("*", function (req, res, next) {
     res.end();
 });
 
+app.get('/', (req,res) => res.status(200).json({'msg': "pilpres 2019"}))
+
 app.get('/pilpres', (req, res) => {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
